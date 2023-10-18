@@ -1,0 +1,54 @@
+package week6.homeassignment;
+
+import java.io.IOException;
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+
+public class Createaccountredhat extends Redhatspecific {
+	@DataProvider(name="filldata")
+	public String[][] senddata() throws IOException{
+		
+		
+		
+		return redhatexcel.senddata();
+	}
+	
+	
+@Test(dataProvider = "filldata")
+	public void createaccount( String username,String password,String confirmpassword,String firstname,String lastname,String email,String phone,String address,String postalcode,String city) throws InterruptedException {	
+		
+		
+		driver.findElement(By.xpath("//button[@id='truste-consent-button']")).click();
+		driver.findElement(By.xpath("//button[@id='rh-registration-link']")).click();
+		driver.findElement(By.id("username")).sendKeys(username);
+		driver.findElement(By.id("password")).sendKeys(password);
+	driver.findElement(By.id("confirmPassword")).sendKeys(confirmpassword);
+	driver.findElement(By.id("firstName")).sendKeys(firstname);
+	driver.findElement(By.id("lastName")).sendKeys(lastname);
+	driver.findElement(By.id("email")).sendKeys(email);
+	driver.findElement(By.id("user.attributes.phoneNumber")).sendKeys(phone);
+	driver.findElement(By.id("user.attributes.jobTitle")).sendKeys("training");
+	driver.findElement(By.xpath("//label[text()='Personal']")).click();
+	WebElement element = driver.findElement(By.id("user.attributes.country"));
+	element.click();
+	Select country = new Select(element);
+	country.selectByVisibleText("India");
+	driver.findElement(By.id("user.attributes.addressLine1")).sendKeys(address);
+	driver.findElement(By.id("user.attributes.addressPostalCode")).sendKeys(postalcode);
+	driver.findElement(By.id("user.attributes.addressCityText")).sendKeys(city);
+	WebElement element2 = driver.findElement(By.id("user.attributes.addressState"));
+	element2.click();
+	Select state = new Select(element2);
+	state.selectByVisibleText("Tamil Nadu");
+
+	
+	}
+
+}
